@@ -398,7 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 MyPage/appsettings.json
-C:\Users\mende\source\repos\_ASP\MyPage\MyPage\MyPage\appsettings.json
-./MyPage/MyPage.csproj
-./MyPage/MyPage.csproj.user
+
+MyPage/MyPage.csproj
+MyPage/MyPage.csproj.user
 .vs
