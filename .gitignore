@@ -401,4 +401,5 @@ MyPage/appsettings.json
 
 MyPage/MyPage.csproj
 MyPage/MyPage.csproj.user
+MyPage/Logs/*/**.*
 .vs

@@ -9,12 +9,19 @@ using MyPage.Models;
 using MyPage.Hubs;
 using Microsoft.AspNetCore.Authentication.Google;
 using NuGet.Protocol;
+using Serilog;
+using Serilog.Events;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
-builder.Logging.AddFilter(logging => logging.HasFlag(LogLevel.Warning));
-builder.Logging.AddConsole();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.File(
+        $"Logs/MyPage/MyPageLog-.txt",
+        rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+Log.Information($"Hello ${DateTime.Now}");
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 services.AddDbContext<ApplicationDbContext>(options =>
@@ -60,6 +67,7 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 
 app.UseRouting();
 app.UseAuthentication();
