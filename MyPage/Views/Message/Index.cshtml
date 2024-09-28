@@ -1,37 +1,46 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html>
 <head>
     <title>Message Board</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row p-1">
-            <div class="col-1">Name</div>
-            <div class="col-5"><input type="text" id="userInput" value="@User.Claims.FirstOrDefault(x => x.Type == "FullName")?.Value" disabled/></div>
-        </div>
-        <div class="row p-1">
-            <div class="col-1">Message</div>
-            <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
-        </div>
-        <div class="row p-1">
-            <div class="col-6 text-end">
-                <input type="button" id="sendButton" value="Send Message" />
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="container">
+            <div class="row p-1">
+                <div class="col-1">Name</div>
+                <div class="col-5"><input type="text" id="userInput" value="@User.Claims.FirstOrDefault(x => x.Type == "FullName")?.Value" disabled /></div>
+            </div>
+            <div class="row p-1">
+                <div class="col-1">Message</div>
+                <div class="col-5"><input type="text" class="w-100" id="messageInput" /></div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6 text-end">
+                    <input type="button" id="sendButton" value="Send Message" />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6">
+                    <hr />
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-6" style="height: 300px; border: 1px solid black;">
+                    <ul id="messagesList"></ul>
+                </div>
             </div>
         </div>
-        <div class="row p-1">
-            <div class="col-6">
-                <hr />
-            </div>
-        </div>
-        <div class="row p-1">
-            <div class="col-6" style="height: 300px; border: 1px solid black;">
-                <ul id="messagesList"></ul>
-            </div>
-        </div>
-    </div>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
-    <script src="~/js/Message.js"></script>
+    }
 </body>
 </html>
 
+@section Scripts
+{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script src="~/js/Message.js"></script>
+}

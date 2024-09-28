@@ -1,25 +1,23 @@
-﻿<html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<html>
 <head>
     <title>Ping Status</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
 </head>
 <body>
-    <h1>Ping Status</h1>
-    <div id="pingResult"></div>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <h1>Ping Status</h1>
+        <div id="pingResult"></div>
 
-    <script>
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/pingHub")
-            .build();
 
-        connection.on("ReceivePingResult", function (message) {
-            document.getElementById("pingResult").innerHTML = message;
-        });
-
-        connection.start().catch(function (err) {
-            return console.error(err.toString());
-        });
-    </script>
+    }
 </body>
 </html>
-
+@section Scripts 
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
+    <script src="~/js/Status/StatusHome.js"></script>
+}
