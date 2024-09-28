@@ -4,17 +4,23 @@ using MyPage.Models;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 
 namespace MyPage.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly IMasterDataRepo _masterRepo;
-        public HomeController(ILogger<HomeController> logger, IMasterDataRepo masterRepo)
+        public HomeController(IMasterDataRepo masterRepo)
         {
-            _logger = logger;
             _masterRepo = masterRepo;
+
+
+            //Log.Logger = new LoggerConfiguration()
+            //    .WriteTo.File(
+            //        $"Logs/MyPage-HomeController/MyPageLog-.txt",
+            //        rollingInterval: RollingInterval.Day)
+            //    .CreateLogger();
         }
 
         public IActionResult Index()
@@ -37,6 +43,8 @@ namespace MyPage.Controllers
         {
             var list = await _masterRepo.GetLanguagesAsync();
             var result = JsonConvert.SerializeObject(list);
+            // Log to file
+            Log.Information(result);
             return Json(result);
         }
     }
