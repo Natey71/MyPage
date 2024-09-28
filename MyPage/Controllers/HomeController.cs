@@ -43,6 +43,7 @@ namespace MyPage.Controllers
         {
             var list = await _masterRepo.GetLanguagesAsync();
             var result = JsonConvert.SerializeObject(list);
+            // Log to file
             Log.Information(result);
             return Json(result);
         }
