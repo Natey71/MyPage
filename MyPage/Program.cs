@@ -8,10 +8,13 @@ using MyPage.Services;
 using MyPage.Models;
 using MyPage.Hubs;
 using Microsoft.AspNetCore.Authentication.Google;
+using NuGet.Protocol;
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 var configuration = builder.Configuration;
 
+builder.Logging.AddFilter(logging => logging.HasFlag(LogLevel.Warning));
+builder.Logging.AddConsole();
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 services.AddDbContext<ApplicationDbContext>(options =>
